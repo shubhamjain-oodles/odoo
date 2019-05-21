@@ -4,6 +4,7 @@ import json
 import logging
 import re
 
+from ast import literal_eval
 from lxml import etree
 
 from odoo import api, models, _
@@ -543,7 +544,7 @@ class ResConfigSettings(models.TransientModel, ResConfigModuleInstallationMixin)
                         _logger.warning(WARNING_MESSAGE, value, field, icp)
                         value = 0.0
                 elif field.type == 'boolean':
-                    value = value.lower() == 'true'
+                    value = bool(literal_eval(str(value)))
             res[name] = value
 
         # other fields: call the method 'get_values'
